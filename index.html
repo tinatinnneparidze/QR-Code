@@ -3,9 +3,40 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <link rel="shortcut icon" href="image/ExampleCode.png" type="image/x-icon " >
+  <link rel="stylesheet" href="css/style.css">
+  <title>QR-Code</title>
 </head>
 <body>
-  
+ <div class="container">
+    <p>Enter your text or URL</p>
+    <input type="text" placeholder="🔗 Type something here..." id="qrText">
+    <p id="errorMsg" class="error"></p>
+    <div id="imgBox">
+      <img src="" id="qrImage">
+    </div>
+    <button onclick="GenerateQR()">Generate QR</button>
+  </div>
+
+  <script>
+    let qrImage = document.getElementById("qrImage");
+    let qrText = document.getElementById("qrText");
+    let errorMsg = document.getElementById("errorMsg");
+
+    function GenerateQR(){
+      if(qrText.value.trim().length === 0){
+        errorMsg.textContent = "გთხოვ, შეიყვანე ტექსტი ან ბმული!";
+        qrImage.style.display = "none";
+      } else {
+        errorMsg.textContent = "";
+        qrImage.style.display = "block";
+        qrImage.src = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" 
+                      + encodeURIComponent(qrText.value);
+      }
+    }
+
+    // Live Preview
+    qrText.addEventListener("input", GenerateQR);
+  </script>
 </body>
 </html>
